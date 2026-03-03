@@ -24,7 +24,7 @@ with st.form(key="reise_form"):
 if submit:
     try:
         # 1. Bestehende Daten laden
-        existing_data = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
+        existing_data = conn.read(spreadsheet=https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk, worksheet=BLATT_NAME)
         
         # 2. Neuen Eintrag bauen
         new_entry = pd.DataFrame([{
@@ -42,7 +42,7 @@ if submit:
             updated_df = new_entry
             
         # 4. Hochladen
-        conn.update(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME, data=updated_df)
+        conn.update(spreadsheet=https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk, worksheet=BLATT_NAME, data=updated_df)
         
         st.balloons()
         st.success("Gespeichert! Viel Spaß in Italien! 🇮🇹")
