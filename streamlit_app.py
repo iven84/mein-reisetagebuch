@@ -6,7 +6,7 @@ import pandas as pd
 st.set_page_config(page_title="Family Travel", page_icon="🌍")
 
 # HIER DEINEN LINK EINTRAGEN:
-MEIN_TABELLEN_LINK = "DEINE_URL_HIER_EINSETZEN"
+MEIN_TABELLEN_LINK = "https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk"
 
 st.title("🌍 Unser Familien-Reisetagebuch")
 st.write("Schreib auf, was wir heute erlebt haben! 😂")
