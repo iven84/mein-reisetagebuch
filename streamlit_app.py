@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="Family Travel", page_icon="🌍")
 
 # HIER DEINEN LINK EINTRAGEN
-MEIN_TABELLEN_LINK = "DEIN_GOOGLE_SHEETS_LINK_HIER"
+MEIN_TABELLEN_LINK = "https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk"
 # HIER PRÜFEN: Heißt es unten in Google "Tabelle1" oder "Sheet1"?
 BLATT_NAME = "Tabelle1" 
 
