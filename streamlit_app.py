@@ -20,7 +20,7 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 # Formular
 with st.form(key="reise_form"):
     datum = st.date_input("Wann?", value=pd.to_datetime("today"))
-    name = st.selectbox("Wer schreibt?", ["Mama", "Papa", "Daliyah", "Kind 1", "Kind 2"])
+    name = st.selectbox("Wer schreibt?", ["Mama", "Papa", "Daliyah", "Matze", "Fabi", "Sabine"])
     ort = st.text_input("Wo sind wir?", placeholder="z.B. Gardasee")
     stimmung = st.select_slider("Stimmung", options=["😢", "😐", "🙂", "🤩", "🚀"])
     erlebnis = st.text_area("Was ist passiert?")
