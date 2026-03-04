@@ -2,12 +2,11 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
-# 1. Konfiguration (Browser-Übersetzung bitte ausschalten!)
+# Browser-Übersetzung beim Bearbeiten bitte AUSSCHALTEN!
 st.set_page_config(page_title="Reisetagebuch", page_icon="🌍")
 
-# 2. DEIN LINK - Absolut sauber ohne Leerzeichen!
-# Falls dein Browser "Import" oder "aus" schreibt -> bitte manuell korrigieren!
-URL = "https://docs.google.com/spreadsheets/d/1MplJAMMUJQZA00XLO1m2NeLocjzmoZEY/edit?usp=drivesdk&ouid=117397593096130174322&rtpof=true&sd=true"
+# DEIN LINK - Kopiere ihn exakt zwischen die Anführungszeichen
+URL = "https://docs.google.com/spreadsheets/d/1aIMSYHxw89-d-FIqsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=sharing"
 MEIN_TABELLEN_LINK = URL.strip()
 BLATT_NAME = "Tabelle1"
 
@@ -17,7 +16,7 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 with st.form(key="reise_form"):
     datum = st.date_input("Wann?", value=pd.to_datetime("today"))
-    name = st.selectbox("Wer schreibt?", ["Mama", "Papa", "Daliyah", "Kind 1", "Kind 2"])
+    wer = st.selectbox("Wer schreibt?", ["Mama", "Papa", "Daliyah", "Kind 1", "Kind 2"])
     ort = st.text_input("Wo sind wir?")
     stimmung = st.select_slider("Stimmung", options=["😢", "😐", "🙂", "🤩", "🚀"])
     erlebnis = st.text_area("Was ist passiert?")
@@ -25,32 +24,25 @@ with st.form(key="reise_form"):
 
 if submit:
     try:
-        # Daten lesen
         df = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
-        
-        # Neuen Eintrag hinzufügen
-        new_row = pd.DataFrame([{"Datum": str(datum), "Name": name, "Ort": ort, "Stimmung": stimmung, "Erlebnis": erlebnis}])
+        new_row = pd.DataFrame([{"Datum": str(datum), "Name": wer, "Ort": ort, "Stimmung": stimmung, "Erlebnis": erlebnis}])
         
         if df is not None and not df.empty:
             updated_df = pd.concat([df, new_row], ignore_index=True)
         else:
             updated_df = new_row
             
-        # Speichern
         conn.update(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME, data=updated_df)
         st.balloons()
-        st.success("Erfolg! Der Eintrag ist in der Tabelle. 🇮🇹")
+        st.success("Gespeichert! Italien kann kommen! 🇮🇹")
     except Exception as e:
         st.error(f"Fehler: {e}")
 
-# Anzeige der Liste
 st.divider()
 try:
     data = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
     if not data.empty:
         st.dataframe(data.iloc[::-1], use_container_width=True)
 except:
-    st.write("Noch keine Einträge vorhanden.")
+    st.info("Noch keine Einträge vorhanden.")
     
-            
-        
