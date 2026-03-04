@@ -1,66 +1,56 @@
-import streamlit as st
+ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
-# 1. Konfiguration
-st.set_page_config(page_title="Family Travel", page_icon="🌍")
+# 1. Konfiguration (Browser-Übersetzung bitte ausschalten!)
+st.set_page_config(page_title="Reisetagebuch", page_icon="🌍")
 
-# 2. DEIN LINK (Hier den Link zwischen die " " kopieren!)
-MEIN_TABELLEN_LINK = "https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk"
-
-# 3. BLATT NAME (Prüfe ob es in Google 'Tabelle1' oder 'Sheet1' heißt)
-BLATT_NAME = "Tabelle1" 
+# 2. DEIN LINK - Absolut sauber ohne Leerzeichen!
+# Falls dein Browser "Import" oder "aus" schreibt -> bitte manuell korrigieren!
+URL = "https://docs.google.com/spreadsheets/d/1aIMSYHxw89-d-FIqsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=sharing"
+MEIN_TABELLEN_LINK = URL.strip()
+BLATT_NAME = "Tabelle1"
 
 st.title("🌍 Unser Familien-Reisetagebuch")
-st.write("Schreib auf, was wir heute erlebt haben! 😂")
 
-# Verbindung aufbauen
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-# Formular
 with st.form(key="reise_form"):
     datum = st.date_input("Wann?", value=pd.to_datetime("today"))
-    name = st.selectbox("Wer schreibt?", ["Mama", "Papa", "Daliyah", "Matze", "Fabi", "Sabine"])
-    ort = st.text_input("Wo sind wir?", placeholder="z.B. Gardasee")
+    name = st.selectbox("Wer schreibt?", ["Mama", "Papa", "Daliyah", "Kind 1", "Kind 2"])
+    ort = st.text_input("Wo sind wir?")
     stimmung = st.select_slider("Stimmung", options=["😢", "😐", "🙂", "🤩", "🚀"])
     erlebnis = st.text_area("Was ist passiert?")
     submit = st.form_submit_button(label="Erinnerung speichern! ✨")
 
 if submit:
     try:
-        # Bestehende Daten lesen
-        existing_data = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
+        # Daten lesen
+        df = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
         
-        # Neuen Eintrag erstellen
-        new_entry = pd.DataFrame([{
-            "Datum": str(datum),
-            "Name": name,
-            "Ort": ort,
-            "Stimmung": stimmung,
-            "Erlebnis": erlebnis
-        }])
+        # Neuen Eintrag hinzufügen
+        new_row = pd.DataFrame([{"Datum": str(datum), "Name": name, "Ort": ort, "Stimmung": stimmung, "Erlebnis": erlebnis}])
         
-        # Daten zusammenfügen
-        if existing_data is not None and not existing_data.empty:
-            updated_df = pd.concat([existing_data, new_entry], ignore_index=True)
+        if df is not None and not df.empty:
+            updated_df = pd.concat([df, new_row], ignore_index=True)
         else:
-            updated_df = new_entry
+            updated_df = new_row
             
-        # Zurückschreiben zu Google
+        # Speichern
         conn.update(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME, data=updated_df)
-        
         st.balloons()
-        st.success("Gespeichert! Viel Spaß in Italien! 🇮🇹")
+        st.success("Erfolg! Der Eintrag ist in der Tabelle. 🇮🇹")
     except Exception as e:
         st.error(f"Fehler: {e}")
 
-# Liste anzeigen
+# Anzeige der Liste
 st.divider()
-st.subheader("📖 Unsere bisherigen Abenteuer")
 try:
     data = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
-    if data is not None and not data.empty:
+    if not data.empty:
         st.dataframe(data.iloc[::-1], use_container_width=True)
 except:
-    st.info("Noch keine Einträge vorhanden.")
+    st.write("Noch keine Einträge vorhanden.")
     
+            
+        
