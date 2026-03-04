@@ -2,10 +2,9 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
-# Seiteneinstellungen
+# Browser-Übersetzung beim Bearbeiten bitte AUSSCHALTEN!
 st.set_page_config(page_title="Reisetagebuch", page_icon="🌍")
 
-# DEIN LINK (direkt aus deinem Screenshot übernommen)
 URL = "https://docs.google.com/spreadsheets/d/1MPlJAMMUJQA0OXLQj-y0p6rS8pL1ZAn-xW6O9p8vUxE/edit?usp=sharing"
 MEIN_TABELLEN_LINK = URL.strip()
 BLATT_NAME = "Tabelle1"
@@ -28,7 +27,6 @@ if submit:
         new_row = pd.DataFrame([{"Datum": str(datum), "Name": wer, "Ort": ort, "Stimmung": stimmung, "Erlebnis": erlebnis}])
         
         if df is not None and not df.empty:
-            # HIER WAR DER FEHLER: Das Wort 'True' muss ausgeschrieben sein
             updated_df = pd.concat([df, new_row], ignore_index=True)
         else:
             updated_df = new_row
@@ -44,7 +42,6 @@ st.divider()
 try:
     data = conn.read(spreadsheet=MEIN_TABELLEN_LINK, worksheet=BLATT_NAME)
     if data is not None and not data.empty:
-        # Auch hier: ignore_index=True falls nötig, aber bei der Anzeige reicht:
         st.dataframe(data.iloc[::-1], use_container_width=True)
 except:
     st.info("Noch keine Einträge vorhanden.")
