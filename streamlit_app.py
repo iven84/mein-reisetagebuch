@@ -6,7 +6,7 @@ import pandas as pd
 st.set_page_config(page_title="Family Travel", page_icon="🌍")
 
 # 2. DEIN LINK (Hier den Link zwischen die " " kopieren!)
-MEIN_TABELLEN_LINK = " https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk "
+MEIN_TABELLEN_LINK = " https://docs.google.com/spreadsheets/d/1aIMSYHxw89-d-FIqsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=sharing "
 
 # 3. BLATT NAME (Prüfe ob es in Google 'Tabelle1' oder 'Sheet1' heißt)
 BLATT_NAME = "Tabelle1" 
