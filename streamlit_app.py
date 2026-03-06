@@ -6,7 +6,7 @@ import pandas as pd
 st.set_page_config(page_title="Reisetagebuch", page_icon="🌍")
 
 # DEIN AKTUELLER LINK (aus Screenshot 84424)
-URL = "https://docs.google.com/spreadsheets/d/1aIMSYHxw89-d-FIqsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=sharing"
+URL = "https://docs.google.com/spreadsheets/d/1aIMSYHxW89-d-FIQsxq9FQJLrrROVdmYceABxglZmq8/edit?usp=drivesdk"
 MEIN_TABELLEN_LINK = URL.strip()
 BLATT_NAME = "Tabelle1"
 
